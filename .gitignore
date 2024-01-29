@@ -4,3 +4,6 @@ __pycache__/
 .vscode/
 pyxel_examples/
 out/
+numpy/
+pigframe/
+sympy/

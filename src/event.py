@@ -119,7 +119,7 @@ class EvReportNetwork(Event):
         
             out += "Tex -------------------\n"
             out += f"$$\n\\begin{{align}}\n"
-            out += f"L_{i} & = \sum_{{i=1}}^{count_neurons} v_i \cdot \sigma(w_i x + b_i) \\\\ \n"
+            out += f"L_{layer.id} & = \sum_{{i=1}}^{count_neurons} v_i \cdot \sigma(w_i x + b_i) \\\\ \n"
             out += "& = "
             summation_parts = [f"({weights[i]} \cdot \sigma({int(neuron.w)} x + {int(neuron.b)})) \\\\\n&" for i, neuron in enumerate(neurons)]
             out += f"{' + '.join(summation_parts)}"
@@ -127,7 +127,7 @@ class EvReportNetwork(Event):
             out += f"\\end{{align}}\n$$"
         filename = self.filepath.split(".")[-2]
         ext = self.filepath.split(".")[1]
-        filename += now.strftime('%Y%m%d%H%M%S')
+        filename += now.strftime('_%Y%m%d_%H%M%S')
         filepath = f"{filename}.{ext}"
         
         with open(filepath, mode="w") as f:

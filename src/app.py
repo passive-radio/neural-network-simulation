@@ -1,5 +1,5 @@
-from pigframe.world import *
 import pyxel
+from pigframe.world import *
 
 from component import *
 from event import *
