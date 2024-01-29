@@ -61,7 +61,7 @@ if __name__ == "__main__":
     app.add_event_to_scene(EvEditNeuron, "simulation", triger=lambda: pyxel.btn(pyxel.MOUSE_BUTTON_LEFT), priority=1)
     app.add_event_to_scene(EvUpdateNeuron, "simulation", triger=lambda: pyxel.btnr(pyxel.MOUSE_BUTTON_LEFT), priority=0)
     app.add_event_to_scene(EvAddNeuron, "simulation", triger=app.triger_add_neuron, priority=2)
-    app.add_event_to_scene(EvReportNetwork, "simulation", triger=app.triget_report_network, priority=3, filepath = "network.txt")
+    app.add_event_to_scene(EvReportNetwork, "simulation", triger=app.triget_report_network, priority=3, filepath = "out/network.md")
     
     app.add_component_to_entity(ent_graph_true, Graph)
     app.add_component_to_entity(ent_graph_prev, PrevGraph)

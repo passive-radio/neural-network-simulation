@@ -1,0 +1,7 @@
+Reported at 2024-01-29 23:44:27
+layer 1 ------------------
+neuron 0: w = 100, b = -24, sigmoid_w = 0.6475
+neuron 1: w = 50, b = -36, sigmoid_w = 0.29
+Tex -------------------
+L_1 = \sum_{i=1}^2 v_i \cdot \sigma(w_i x + b_i)
+= \ (0.6475 \cdot \sigma(100 x + -24)) + (0.29 \cdot \sigma(50 x + -36))

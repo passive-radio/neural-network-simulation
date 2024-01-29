@@ -104,18 +104,29 @@ class EvReportNetwork(Event):
         
     def _Event__process(self):
         out = ""
+        now = datetime.now(timezone(timedelta(hours=9)))
+        out += f"Reported at {now.strftime('%Y-%m-%d %H:%M:%S')}"
         for ent, (layer) in self.world.get_component(Layer):
             weights = layer.weights
             neuron_ids = layer.neuron_ids
-            out += f"layer {layer.id} ---------------\n"
+            count_neurons = len(neuron_ids)
+            neurons = []
+            out += f"\nlayer {layer.id} ------------------\n"
             for i, neuron_id in enumerate(neuron_ids):
                 neuron = self.world.get_entity_object(neuron_id)[Neuron]
+                neurons.append(neuron)
                 out += f"neuron {i}: w = {int(neuron.w)}, b = {int(neuron.b)}, sigmoid_w = {weights[i]}\n"
-                
-        filename = self.filepath.split(".")[0]
+        
+            out += "Tex -------------------\n"
+            out += f"$$\n\\begin{{align}}\n"
+            out += f"L_{i} & = \sum_{{i=1}}^{count_neurons} v_i \cdot \sigma(w_i x + b_i) \\\\ \n"
+            out += "& = "
+            summation_parts = [f"({weights[i]} \cdot \sigma({int(neuron.w)} x + {int(neuron.b)})) \\\\\n&" for i, neuron in enumerate(neurons)]
+            out += f"{' + '.join(summation_parts)}"
+            out = out[:-1]
+            out += f"\\end{{align}}\n$$"
+        filename = self.filepath.split(".")[-2]
         ext = self.filepath.split(".")[1]
-        now = datetime.now(timezone(timedelta(hours=9)))
-        out += f"Reported at {now.strftime('%Y-%m-%d %H:%M:%S')}"
         filename += now.strftime('%Y%m%d%H%M%S')
         filepath = f"{filename}.{ext}"
         
