@@ -34,8 +34,8 @@ class ScDrawGraph(Screen):
     def draw(self):
         for ent, (graph) in self.world.get_component(Graph):
             for pos in graph.pos_list:
-                pyxel.rect(pos[0], pos[1], 2, 2, 1)
-                pyxel.rect(pyxel.mouse_x, pyxel.mouse_y, 2, 2, 4)
+                pyxel.rect(pos[0], pos[1], 4, 4, 1)
+                pyxel.circ(pyxel.mouse_x, pyxel.mouse_y, 8, 3)
                 
         self.world.font.draw_text(self.world.x_min * self.world.x_scale + self.world.left, (self.world.y_max - self.world.y_min) * self.world.y_scale + self.world.top, "0", 1)
         self.world.font.draw_text(self.world.x_max * self.world.x_scale + self.world.left, (self.world.y_max - self.world.y_min) * self.world.y_scale + self.world.top, str(self.world.x_max), 1)
@@ -53,7 +53,7 @@ class ScGraph(Screen):
     def draw(self):
         for ent, (graph) in self.world.get_component(Graph):
             for pos in graph.pos_list:
-                pyxel.rect(pos[0], pos[1], 1, 1, 1)
+                pyxel.rect(pos[0], pos[1], 3, 3, 3)
                 
         self.world.font.draw_text(self.world.x_min * self.world.x_scale + self.world.left, (self.world.y_max - self.world.y_min) * self.world.y_scale + self.world.top, "0", 1)
         self.world.font.draw_text(self.world.x_max * self.world.x_scale + self.world.left, (self.world.y_max - self.world.y_min) * self.world.y_scale + self.world.top, str(self.world.x_max), 1)
@@ -97,7 +97,7 @@ class ScApprox(Screen):
         
         for  ent, (prev_graph) in self.world.get_component(PrevGraph):
             for i, y in enumerate(prev_graph.y_list):
-                pyxel.rect(int(X[i] * x_scale + self.world.left), int((y_max - y) * y_scale + self.world.top), 3, 3, 1)
+                pyxel.rect(int(X[i] * x_scale + self.world.left), int((y_max - y) * y_scale + self.world.top), 4, 4, 1)
                 
         for ent, (layer) in self.world.get_component(Layer):
             weights = layer.weights
@@ -107,8 +107,8 @@ class ScApprox(Screen):
                 Z = [neuron.w * x_ + neuron.b for x_ in X]
                 Y = [(y_max - sigmoid(z_) * weights[i])* y_scale + self.world.top for z_ in Z]
                 for i, y in enumerate(Y):
-                    if i % 40 in (0, 1, 2, 3, 4, 5, 6, 1, 8):
-                        pyxel.rect(int(X[i] * x_scale + self.world.left), int(y), 2, 2, 4)
+                    if i % 50 in (0, 1, 2, 3, 4, 5, 6, 1, 8, 9, 10, 11, 12, 13, 14, 15):
+                        pyxel.rect(int(X[i] * x_scale + self.world.left), int(y), 3, 3, 4)
 
 class ScAddNeuronButton(Screen):
     def __init__(self, world, priority: int = 0, *args) -> None:
