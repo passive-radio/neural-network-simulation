@@ -1,4 +1,0 @@
-layer 1 ---------------
-neuron 0: w = 100, b = -40, sigmoid_w = 0.6
-neuron 1: w = 50, b = -40, sigmoid_w = -0.6
-Reported at 2024-01-29 23:20:40
