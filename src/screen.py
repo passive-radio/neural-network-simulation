@@ -11,6 +11,9 @@ x = Symbol('x')
 z = Symbol('z')
 y = Symbol('y')
 
+def button_pressed(x: int, y: int, w: int, h: int) -> bool:
+    return (x < pyxel.mouse_x < x + w) and (y < pyxel.mouse_y < y + h) and pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT)
+
 def sigmoid(x_):
     return 1/(1+math.exp(-x_))
 
@@ -108,8 +111,19 @@ class ScApprox(Screen):
                         pyxel.rect(int(X[i] * x_scale + self.world.left), int(y), 2, 2, 4)
 
 class ScAddNeuronButton(Screen):
+    def __init__(self, world, priority: int = 0, *args) -> None:
+        super().__init__(world, priority, *args)
+        self.world.triger_add_neuron = lambda: button_pressed(self.world.x_max * self.world.x_scale + self.world.left + 40, self.world.y_min * self.world.y_scale + 40, 120, 30)
+
     def draw(self):
-        pyxel.rect(self.world.x_max * self.world.x_scale + self.world.left + 40, self.world.y_min * self.world.y_scale + 40, 120, 30, 7)
-        pyxel.rectb(self.world.x_max * self.world.x_scale + self.world.left + 40, self.world.y_min * self.world.y_scale + 40, 120, 30, 1)
-        pyxel.rectb(self.world.x_max * self.world.x_scale + self.world.left + 41, self.world.y_min * self.world.y_scale + 41, 118, 28, 1)
+        pyxel.rect(self.world.x_max * self.world.x_scale + self.world.left + 40, self.world.y_min * self.world.y_scale + 40, 120, 30, 11)
         self.world.font.draw_text(self.world.x_max * self.world.x_scale + self.world.left + 45, self.world.y_min * self.world.y_scale + 42, "Add Neuron!", 0)
+        
+class ScButtonReportNetwork(Screen):
+    def __init__(self, world, priority: int = 0, *args) -> None:
+        super().__init__(world, priority, *args)
+        self.world.triget_report_network = lambda: button_pressed(self.world.x_max * self.world.x_scale + self.world.left + 200, self.world.y_min * self.world.y_scale + 40, 120, 30)
+    
+    def draw(self):
+        pyxel.rect(self.world.x_max * self.world.x_scale + self.world.left + 200, self.world.y_min * self.world.y_scale + 40, 120, 30, 11)
+        self.world.font.draw_text(self.world.x_max * self.world.x_scale + self.world.left + 205, self.world.y_min * self.world.y_scale + 42, "Report Network!", 0)

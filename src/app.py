@@ -48,25 +48,28 @@ if __name__ == "__main__":
     layer1 = app.create_entity()
     ent_graph_true = app.create_entity()
     ent_graph_prev = app.create_entity()
-
-    app.add_event_to_scene(EvPenDown, "make-initial-graph", triger=lambda: pyxel.btn(pyxel.MOUSE_BUTTON_LEFT), priority=0)
-    app.add_event_to_scene(EvEditNeuron, "simulation", triger=lambda: pyxel.btn(pyxel.MOUSE_BUTTON_LEFT), priority=1)
-    app.add_event_to_scene(EvUpdateNeuron, "simulation", triger=lambda: pyxel.btnr(pyxel.MOUSE_BUTTON_LEFT), priority=0)
     
-    app.add_component_to_entity(ent_graph_true, Graph)
-    app.add_component_to_entity(ent_graph_prev, PrevGraph)
-    app.add_component_to_entity(layer1, Layer, [neuron1, neuron2], [0.6, -0.6])
-    app.add_component_to_entity(neuron1, Neuron, 100, -40) # s = -b / w
-    app.add_component_to_entity(neuron2, Neuron, 50, -40) # s = -b / w
-    
-    app.add_system_to_scenes(SysUpdatePrevGraph, "simulation", 0)
-
     app.add_screen_to_scenes(ScDrawGraph, "make-initial-graph", 1)
     app.add_screen_to_scenes(ScInitialGuide, "make-initial-graph", 0)
     app.add_screen_to_scenes(ScGraph, "simulation", 2)
     app.add_screen_to_scenes(ScApprox, "simulation", 1)
     app.add_screen_to_scenes(ScSimulationParams, "simulation", 0)
     app.add_screen_to_scenes(ScAddNeuronButton, "simulation", 3)
+    app.add_screen_to_scenes(ScButtonReportNetwork, "simulation", 4)
+    
+    app.add_event_to_scene(EvPenDown, "make-initial-graph", triger=lambda: pyxel.btn(pyxel.MOUSE_BUTTON_LEFT), priority=0)
+    app.add_event_to_scene(EvEditNeuron, "simulation", triger=lambda: pyxel.btn(pyxel.MOUSE_BUTTON_LEFT), priority=1)
+    app.add_event_to_scene(EvUpdateNeuron, "simulation", triger=lambda: pyxel.btnr(pyxel.MOUSE_BUTTON_LEFT), priority=0)
+    app.add_event_to_scene(EvAddNeuron, "simulation", triger=app.triger_add_neuron, priority=2)
+    app.add_event_to_scene(EvReportNetwork, "simulation", triger=app.triget_report_network, priority=3, filepath = "network.txt")
+    
+    app.add_component_to_entity(ent_graph_true, Graph)
+    app.add_component_to_entity(ent_graph_prev, PrevGraph)
+    app.add_component_to_entity(layer1, Layer, 1, [neuron1, neuron2], [0.6, -0.6])
+    app.add_component_to_entity(neuron1, Neuron, 100, -40) # s = -b / w
+    app.add_component_to_entity(neuron2, Neuron, 50, -40) # s = -b / w
+    
+    app.add_system_to_scenes(SysUpdatePrevGraph, "simulation", 0)
     
     app.add_scene_transition("make-initial-graph", "simulation", lambda: pyxel.btnp(pyxel.KEY_RETURN))
 

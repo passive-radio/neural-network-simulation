@@ -23,5 +23,6 @@ class Neuron(Component):
     
 @dataclass
 class Layer(Component):
+    id: int
     neuron_ids: List[int] = field(default_factory=list)
     weights: List[float] = field(default_factory=list)

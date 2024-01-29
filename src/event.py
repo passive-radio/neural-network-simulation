@@ -4,6 +4,8 @@ import numpy as np
 from sympy import *
 import math
 
+from datetime import datetime, timedelta, timezone
+
 from component import *
 
 x = Symbol('x')
@@ -85,10 +87,37 @@ class EvUpdateNeuron(Event):
 class EvAddNeuron(Event):
     def _Event__process(self):
         ent_neuron = self.world.create_entity()
-        self.world.add_component_to_entity(ent_neuron, Neuron, 999, -40)
+        self.world.add_component_to_entity(ent_neuron, Neuron, 60, -40)
 
         for ent, (layer) in self.world.get_component(Layer):
             layer.neuron_ids.append(ent_neuron)
-            layer.weights.append(0.5)
-        
+            layer.weights.append(0.2)
+
         print(f"Neuron Added: {len(layer.neuron_ids) - 1}")
+        
+class EvReportNetwork(Event):
+    def __init__(self, world, priority: int = 0, **kwargs) -> None:
+        super().__init__(world, priority)
+        if kwargs.get("filepath") is None:
+            raise ValueError("filepath is not set")
+        self.filepath = kwargs["filepath"]
+        
+    def _Event__process(self):
+        out = ""
+        for ent, (layer) in self.world.get_component(Layer):
+            weights = layer.weights
+            neuron_ids = layer.neuron_ids
+            out += f"layer {layer.id} ---------------\n"
+            for i, neuron_id in enumerate(neuron_ids):
+                neuron = self.world.get_entity_object(neuron_id)[Neuron]
+                out += f"neuron {i}: w = {int(neuron.w)}, b = {int(neuron.b)}, sigmoid_w = {weights[i]}\n"
+                
+        filename = self.filepath.split(".")[0]
+        ext = self.filepath.split(".")[1]
+        now = datetime.now(timezone(timedelta(hours=9)))
+        out += f"Reported at {now.strftime('%Y-%m-%d %H:%M:%S')}"
+        filename += now.strftime('%Y%m%d%H%M%S')
+        filepath = f"{filename}.{ext}"
+        
+        with open(filepath, mode="w") as f:
+            f.write(out)
