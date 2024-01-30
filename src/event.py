@@ -13,7 +13,7 @@ z = Symbol('z')
 y = Symbol('y')
 
 def sigmoid(x_):
-    return 1/(1+math.exp(-x_))
+    return 1/(1+np.exp(-x_))
 
 class EvPenDown(Event):
     def _Event__process(self):
@@ -46,7 +46,7 @@ class EvEditNeuron(Event):
                 neuron = self.world.get_entity_object(neuron_id)[Neuron]
                 
                 # 自分もほかのニューロンも編集していない場合のみ編集を許可する
-                print(neuron.editing, self.world.editing_neuron)
+                # print(neuron.editing, self.world.editing_neuron)
                 if (neuron.editing == False) and (self.world.editing_neuron is None):
                     Z  = [neuron.w * x_ + neuron.b for x_ in X]
                     Y = [(y_max - sigmoid(z_) * weights[i])* y_scale + self.world.top for z_ in Z]
@@ -60,7 +60,7 @@ class EvEditNeuron(Event):
                         if -1 * self.collision_detection_threshold < Y_diff < self.collision_detection_threshold:
                             neuron.editing = True
                             self.world.editing_neuron = neuron_id
-                            print(f"Neuron Editing: {i}")
+                            # print(f"Neuron Editing: {i}")
                 
                 elif neuron.editing == True:
                     # s = -b / w
@@ -81,19 +81,19 @@ class EvUpdateNeuron(Event):
                 self.world.editing_neuron = None
                 if neuron.editing:
                     neuron.editing = False
-                    print(f"Neuron Edited: {i}")
-                    print(f"Editing Neuron: {self.world.editing_neuron}")
+                    # print(f"Neuron Edited: {i}")
+                    # print(f"Editing Neuron: {self.world.editing_neuron}")
                     
 class EvAddNeuron(Event):
     def _Event__process(self):
         ent_neuron = self.world.create_entity()
-        self.world.add_component_to_entity(ent_neuron, Neuron, 60, -40)
+        self.world.add_component_to_entity(ent_neuron, Neuron, 800, -700)
 
         for ent, (layer) in self.world.get_component(Layer):
             layer.neuron_ids.append(ent_neuron)
             layer.weights.append(0.2)
 
-        print(f"Neuron Added: {len(layer.neuron_ids) - 1}")
+        # print(f"Neuron Added: {len(layer.neuron_ids) - 1}")
         
 class EvReportNetwork(Event):
     def __init__(self, world, priority: int = 0, **kwargs) -> None:

@@ -66,8 +66,8 @@ if __name__ == "__main__":
     app.add_component_to_entity(ent_graph_true, Graph)
     app.add_component_to_entity(ent_graph_prev, PrevGraph)
     app.add_component_to_entity(layer1, Layer, 1, [neuron1, neuron2], [0.6, -0.6])
-    app.add_component_to_entity(neuron1, Neuron, 100, -40) # s = -b / w
-    app.add_component_to_entity(neuron2, Neuron, 50, -40) # s = -b / w
+    app.add_component_to_entity(neuron1, Neuron, 1000, -400) # s = -b / w
+    app.add_component_to_entity(neuron2, Neuron, 1000, -600) # s = -b / w
     
     app.add_system_to_scenes(SysUpdatePrevGraph, "simulation", 0)
     

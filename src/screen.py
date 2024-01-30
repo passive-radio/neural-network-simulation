@@ -15,7 +15,7 @@ def button_pressed(x: int, y: int, w: int, h: int) -> bool:
     return (x < pyxel.mouse_x < x + w) and (y < pyxel.mouse_y < y + h) and pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT)
 
 def sigmoid(x_):
-    return 1/(1+math.exp(-x_))
+    return 1/(1+np.exp(-x_))
 
 class ScInitialGuide(Screen):
     def __init__(self, world, priority: int = 0, *args) -> None:

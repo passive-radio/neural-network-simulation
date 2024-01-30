@@ -12,7 +12,7 @@ z = Symbol('z')
 y = Symbol('y')
 
 def sigmoid(x_):
-    return 1/(1+math.exp(-x_))
+    return 1/(1+np.exp(-x_))
 
 class SysUpdatePrevGraph(System):
     def __init__(self, world, priority: int = 0, *args) -> None:
