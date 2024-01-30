@@ -1,0 +1,4 @@
+pigframe
+pyxel
+numpy
+sympy
